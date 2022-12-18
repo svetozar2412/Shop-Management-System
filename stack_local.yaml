@@ -1,0 +1,100 @@
+version: '3'
+
+services:
+  authenticationDB:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+#    ports:
+#      - 3307:3306
+    volumes:
+    - authentication_volume:/var/lib/mysql
+    networks:
+      - authentication_network
+
+  authenticationDBMigration:
+    image: authenticationdbmigration
+    environment:
+      - DATABASE_URL=authenticationDB
+    networks:
+      - authentication_network
+
+  authentication:
+    image: authentication
+    environment:
+      - DATABASE_URL=authenticationDB
+    ports:
+    - 5002:5002
+    networks:
+      - authentication_network
+
+  productDB:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+#    ports:
+#      - 3306:3306
+    volumes:
+      - products_volume:/var/lib/mysql
+    networks:
+      - products_network
+
+  productsDBMigration:
+    image: productsdbmigration
+    environment:
+      - DATABASE_URL=productDB
+    networks:
+      - products_network
+
+  productsWarehouseman:
+    image: productswarehouseman
+    environment:
+      - DATABASE_URL=productDB
+    ports:
+      - 5003:5003
+    networks:
+      - redis_network
+
+  productsCustomer:
+    image: productscustomer
+    environment:
+      - DATABASE_URL=productDB
+    ports:
+      - 5004:5004
+    networks:
+      - products_network
+
+  productsAdmin:
+    image: productsadmin
+    environment:
+      - DATABASE_URL=productDB
+    ports:
+      - 5005:5005
+    networks:
+      - products_network
+
+  daemon:
+    image: daemon
+    environment:
+      - DATABASE_URL=productDB
+#    ports:
+#      - 5006:5006
+    networks:
+      - products_network
+
+  redis:
+    image: redis
+#    ports:
+#      - 6379:6379
+    networks:
+      - redis_network
+      - products_network
+
+volumes:
+  authentication_volume:
+  products_volume:
+
+networks:
+  authentication_network:
+  products_network:
+  redis_network:

@@ -1,0 +1,46 @@
+docker tag authentication 192.168.99.104:5000/authentication
+docker tag authenticationdbmigration 192.168.99.104:5000/authenticationdbmigration
+docker tag daemon 192.168.99.104:5000/daemon
+docker tag productscustomer 192.168.99.104:5000/productscustomer
+docker tag productswarehouseman 192.168.99.104:5000/productswarehouseman
+docker tag productsadmin 192.168.99.104:5000/productsadmin
+docker tag productsdbmigration 192.168.99.104:5000/productsdbmigration
+
+docker push 192.168.99.104:5000/authentication
+docker push 192.168.99.104:5000/authenticationdbmigration
+docker push 192.168.99.104:5000/daemon
+docker push 192.168.99.104:5000/productscustomer
+docker push 192.168.99.104:5000/productswarehouseman
+docker push 192.168.99.104:5000/productsadmin
+docker push 192.168.99.104:5000/productsdbmigration
+
+docker pull 192.168.99.104:5000/authentication
+docker pull 192.168.99.104:5000/authenticationdbmigration
+docker pull 192.168.99.104:5000/daemon
+docker pull 192.168.99.104:5000/productscustomer
+docker pull 192.168.99.104:5000/productswarehouseman
+docker pull 192.168.99.104:5000/productsadmin
+docker pull 192.168.99.104:5000/productsdbmigration
+
+docker tag 192.168.99.104:5000/authentication authentication
+docker tag 192.168.99.104:5000/authenticationdbmigration authenticationdbmigration
+docker tag 192.168.99.104:5000/daemon daemon
+docker tag 192.168.99.104:5000/productscustomer productscustomer
+docker tag 192.168.99.104:5000/productswarehouseman productswarehouseman
+docker tag 192.168.99.104:5000/productsadmin productsadmin
+docker tag 192.168.99.104:5000/productsdbmigration productsdbmigration
+
+cp /c/Users/"Svetozar Divljakovic"/PycharmProjects/pythonProject/stack.yaml stack.yaml
+docker stack deploy --compose-file stack.yaml stack
+
+
+docker service rm stack_authenticationDBMigration
+docker service rm stack_redis
+docker service rm stack_authenticationDB
+docker service rm stack_authentication
+docker service rm stack_daemon
+docker service rm stack_productsDBMigration
+docker service rm stack_productDB
+docker service rm stack_productsAdmin
+docker service rm stack_productsCustomer
+docker service rm stack_productsWarehouseman

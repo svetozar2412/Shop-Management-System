@@ -1,0 +1,1 @@
+python main.py --type all --with-authentication --authentication-address http://127.0.0.1:5002 --jwt-secret JWT_SECRET_KEY --roles-field role --administrator-role admin --customer-role customer --warehouse-role warehouseman --customer-address http://127.0.0.1:5004 --warehouse-address http://127.0.0.1:5003 --administrator-address http://127.0.0.1:5005
